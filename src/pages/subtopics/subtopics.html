@@ -14,5 +14,9 @@
 
 
 <ion-content padding>
-
+  <ion-list no-lines>
+    <button ion-item *ngFor="let item of subtopics" (click)="goToSubtopic(item)">
+      {{ item }}
+    </button>
+  </ion-list>
 </ion-content>

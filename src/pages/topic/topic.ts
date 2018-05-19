@@ -18,28 +18,24 @@ import { SubtopicsPage } from "../subtopics/subtopics";
 export class TopicPage {
 
   public data;
-  public sub;
-  public temp;
   public topics = [];
+  public subtopics;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.data = this.navParams.get("topics");
-    this.sub = this.data.sub;
-    let topic = this.data.top;
-
-
-    Object.keys(this.sub[topic]).map((k)=>{
+    this.subtopics = this.data.sub[this.data.top];
+    Object.keys(this.data.sub[this.data.top]).map((k)=>{
     this.topics.push(k);
-      
     })
   }
 
-  // goToSubtopic(data){
-  //   this.navCtrl.push(SubtopicsPage, {
-  //     subtopics : {
-  //       topics : this.sub[topic]
-  //     }
-  //   })
-  // }
+  goToSubtopic(data){
+    this.navCtrl.push(SubtopicsPage, {
+      subtopics : {
+        topic : data,
+        info: this.subtopics
+      }
+    })
+  }
   
 }

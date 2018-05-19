@@ -23,7 +23,7 @@ export class SubjectsPage {
   public subArr = [];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     firebase.database().ref('Subjects ').once('value').then((snapshot) => {
-      this.data = (snapshot.val()) || 'Anonymous';
+      this.data = (snapshot.val());
       this.getTheCorrectSubjects();
       Object.keys(this.subjects).map((k)=>{
         this.subArr.push(k);

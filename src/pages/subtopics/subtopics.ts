@@ -14,12 +14,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'subtopics.html',
 })
 export class SubtopicsPage {
+  public data: any;
+  public subtopics = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SubtopicsPage');
+    this.data = this.navParams.get("subtopics")
+    //Since this is an array (not an object)
+    this.subtopics=[...this.data.info[this.data.topic].subtopics]
   }
 
 }
