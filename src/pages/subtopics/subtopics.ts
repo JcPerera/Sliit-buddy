@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { VideosPage } from "../videos/videos";
 
 /**
  * Generated class for the SubtopicsPage page.
@@ -19,8 +20,25 @@ export class SubtopicsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.data = this.navParams.get("subtopics")
+    console.log(this.data.info[this.data.topic].subtopics)
     //Since this is an array (not an object)
-    this.subtopics=[...this.data.info[this.data.topic].subtopics]
+    //this.subtopics=[...this.data.info[this.data.topic].subtopics]
+
+    Object.keys(this.data.info[this.data.topic].subtopics).map((k) => {
+      this.subtopics.push(k);
+    })
+    console.log(this.subtopics)
+
   }
+
+  goToVideosPage(item) {
+    this.navCtrl.push(VideosPage, {
+      video :{
+        data: this.data.info[this.data.topic].subtopics[item],
+        selected: item
+      }
+    })
+  }
+
 
 }

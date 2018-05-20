@@ -10,7 +10,9 @@ import { LoginPage } from "../pages/login/login";
 import { SubjectsPage } from "../pages/subjects/subjects";
 import { TopicPage } from "../pages/topic/topic";
 import { SubtopicsPage } from "../pages/subtopics/subtopics";
+import { VideosPage } from "../pages/videos/videos";
 
+import { YoutubePipe } from "../pipes/youtube/youtube";
 import { GooglePlus } from '@ionic-native/google-plus';
 
 @NgModule({
@@ -20,7 +22,9 @@ import { GooglePlus } from '@ionic-native/google-plus';
     LoginPage,
     SubjectsPage,
     TopicPage,
-    SubtopicsPage
+    SubtopicsPage,
+    VideosPage,
+    YoutubePipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,8 @@ import { GooglePlus } from '@ionic-native/google-plus';
     LoginPage,
     SubjectsPage,
     TopicPage,
-    SubtopicsPage
+    SubtopicsPage,
+    VideosPage
   ],
   providers: [
     StatusBar,

@@ -21,11 +21,14 @@ export class SubjectsPage {
   public subjects: any;
   public sem: any;
   public subArr = [];
+  public path : any;
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     firebase.database().ref('Subjects ').once('value').then((snapshot) => {
       this.data = (snapshot.val());
       this.getTheCorrectSubjects();
-      Object.keys(this.subjects).map((k)=>{
+      Object.keys(this.subjects).map((k) => {
         this.subArr.push(k);
       })
     });;
@@ -38,32 +41,40 @@ export class SubjectsPage {
 
   getTheCorrectSubjects() {
     this.sem = this.navParams.get('yearNsem');
-    if (this.sem.year == "1st Year" && this.sem.semester == 1) {
-      this.subjects = this.data.Year1.Semester1;
-    } else if (this.sem.year == "1st Year" && this.sem.semester == 2) {
-      this.subjects = this.data.Year1.Semester2;
-    } else if (this.sem.year == "2nd Year" && this.sem.semester == 1) {
-      this.subjects = this.data.Year2.Semester1;
-    } else if (this.sem.year == "2nd Year" && this.sem.semester == 2) {
-      this.subjects = this.data.Year2.Semester2;
-    } else if (this.sem.year == "3rd Year" && this.sem.semester == 1) {
-      this.subjects = this.data.Year3.Semester1;
-    } else if (this.sem.year == "3rd Year" && this.sem.semester == 2) {
-      this.subjects = this.data.Year3.Semester2;
-    } else if (this.sem.year == "4th Year" && this.sem.semester == 1) {
-      this.subjects = this.data.Year4.Semester1;
-    } else if (this.sem.year == "4th Year" && this.sem.semester == 2) {
-      this.subjects = this.data.Year4.Semester2;
+    let year;
+    let part;
+    if (this.sem.year == "1st Year") {
+      year = "Year1"
+    } else if (this.sem.year == "2nd Year") {
+      year = "Year2"
+    } else if (this.sem.year == "3rd Year") {
+      year = "Year3"
+    } else if (this.sem.year == "4th Year") {
+      year = "Year4"
     } else {
-      console.log("error")
+      console.log("error in finding correct year")
     }
+
+    if (this.sem.semester == 1) {
+      part = "Semester1"
+    } else if (this.sem.semester == 2) {
+      part = "Semester2"
+    }else {
+      console.log("error in finding correct semster")
+    }
+
+    this.subjects = this.data[year][part];
+    console.log(this.subjects);
+
+    this.path = year+"/"+part
   }
 
-  goToTopicPage(topic){
+  goToTopicPage(topic) {
     this.navCtrl.push(TopicPage, {
-      topics : {
-        sub:this.subjects,
-        top:topic
+      topics: {
+        sub: this.subjects,
+        top: topic,
+        path: this.path
       }
 
     })
