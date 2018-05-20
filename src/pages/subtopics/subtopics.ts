@@ -27,15 +27,15 @@ export class SubtopicsPage {
     Object.keys(this.data.info[this.data.topic].subtopics).map((k) => {
       this.subtopics.push(k);
     })
-    console.log(this.subtopics)
-
+    console.log(this.data.path);
   }
 
   goToVideosPage(item) {
     this.navCtrl.push(VideosPage, {
       video :{
         data: this.data.info[this.data.topic].subtopics[item],
-        selected: item
+        selected: item,
+        path: this.data.path+"/subtopics/"+item
       }
     })
   }

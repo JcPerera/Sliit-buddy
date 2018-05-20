@@ -33,7 +33,8 @@ export class TopicPage {
     this.navCtrl.push(SubtopicsPage, {
       subtopics : {
         topic : data,
-        info: this.subtopics
+        info: this.subtopics,
+        path: this.data.path+"/"+data
       }
     })
   }

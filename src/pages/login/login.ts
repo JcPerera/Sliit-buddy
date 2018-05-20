@@ -52,24 +52,39 @@ export class LoginPage {
         'scopes': 'profile email'
       })
 
-      return await this.fireAuth.signInWithCredential(
+      const credential = await this.fireAuth.signInWithCredential(
         firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
       )
+
+      console.log(credential);
+
+      this.userProfile.child(credential.uid).update({
+        email: credential.email,
+        username: credential.displayName,
+        photo: credential.photoURL
+      }).then(() => {
+
+      }, error => {
+        console.log(error);
+      })
+
+
     } catch (err) {
       console.log(err);
     }
   }
+
 
   async webGoogleLogin(): Promise<void> {
     try {
       const provider = new firebase.auth.GoogleAuthProvider();
       const credential = await this.fireAuth.signInWithPopup(provider);
 
-
-      this.userProfile.child(credential.user.uid).set({
+      console.log(credential);
+      this.userProfile.child(credential.user.uid).update({
         email: credential.user.email,
         username: credential.user.displayName,
-        photo: credential.user.photoURL
+        photo: credential.user.photoURL,
       }).then(() => {
 
       }, error => {

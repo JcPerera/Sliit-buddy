@@ -64,9 +64,7 @@ export class SubjectsPage {
     }
 
     this.subjects = this.data[year][part];
-    console.log(this.subjects);
-
-    this.path = year+"/"+part
+    this.path = year+"/"+part;
   }
 
   goToTopicPage(topic) {
@@ -74,7 +72,7 @@ export class SubjectsPage {
       topics: {
         sub: this.subjects,
         top: topic,
-        path: this.path
+        path: this.path+"/"+topic
       }
 
     })

@@ -18,7 +18,7 @@ export class VideosPage {
   public videos = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log(this.navParams.get('video').data)
+    console.log(this.navParams.get('video').path)
     this.videos = [...this.navParams.get('video').data]
   }
 

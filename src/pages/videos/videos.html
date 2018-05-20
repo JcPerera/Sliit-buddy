@@ -20,6 +20,9 @@
 
     <ion-card-content>
       <p>{{item.name}}</p>
+      <p>
+        {{item.key}}
+      </p>
     </ion-card-content>
 
     <ion-row>
@@ -32,7 +35,7 @@
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>{{item.comments.length}} Comments</div>
         </button>
       </ion-col>
       
