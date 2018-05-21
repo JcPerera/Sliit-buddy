@@ -137,12 +137,16 @@ export class LoginPage {
               }
             } else {
               this.fireAuth.signOut();
-              this.gplus.logout();
+              this.gplus.logout().catch(k=>{
+                console.log(k);
+              });;
               this.displayAlert('Warning', 'You are not an instructor please login as a student')
             }
           } catch{
             this.fireAuth.signOut();
-            this.gplus.logout();
+            this.gplus.logout().catch(k=>{
+              console.log(k);
+            });;
             this.displayAlert('Warning', 'You are not an instructor please login as a student')
           }
         })
@@ -176,11 +180,15 @@ export class LoginPage {
                 console.log(error);
               }
             } else {
-              this.fireAuth.signOut();
+              this.fireAuth.signOut().catch(k=>{
+                console.log(k);
+              });;
               this.displayAlert('Warning', 'You are not an instructor please login as a student')
             }
           } catch{
-            this.fireAuth.signOut();
+            this.fireAuth.signOut().catch(k=>{
+              console.log(k);
+            });;
             this.displayAlert('Warning', 'You are not an instructor please login as a student')
           }
 

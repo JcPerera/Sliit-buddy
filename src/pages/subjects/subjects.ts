@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from "firebase";
+import { LoadingController } from 'ionic-angular';
 
 import { TopicPage } from "../topic/topic";
 
@@ -21,16 +22,23 @@ export class SubjectsPage {
   public subjects: any;
   public sem: any;
   public subArr = [];
-  public path : any;
+  public path: any;
+  public loading: any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
+    public navParams: NavParams
+  ) {
+    this.displayPreloader('Loading Data');
     firebase.database().ref('Subjects ').once('value').then((snapshot) => {
       this.data = (snapshot.val());
       this.getTheCorrectSubjects();
       Object.keys(this.subjects).map((k) => {
         this.subArr.push(k);
       })
+    }).catch(k => {
+      console.log(k);
     });;
 
   }
@@ -59,12 +67,12 @@ export class SubjectsPage {
       part = "Semester1"
     } else if (this.sem.semester == 2) {
       part = "Semester2"
-    }else {
+    } else {
       console.log("error in finding correct semster")
     }
 
     this.subjects = this.data[year][part];
-    this.path = year+"/"+part;
+    this.path = year + "/" + part;
   }
 
   goToTopicPage(topic) {
@@ -72,9 +80,24 @@ export class SubjectsPage {
       topics: {
         sub: this.subjects,
         top: topic,
-        path: this.path+"/"+topic
+        path: this.path + "/" + topic
       }
 
     })
+  }
+
+  displayPreloader(msg: any): void {
+    this.loading = this.loadingCtrl.create({
+      dismissOnPageChange: true,
+      content: msg
+    });
+
+    this.loading.present();
+  }
+
+
+
+  hidePreloader(): void {
+    this.loading.dismiss();
   }
 }

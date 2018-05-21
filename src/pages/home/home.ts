@@ -26,7 +26,9 @@ export class HomePage {
   signOut() {
     this.fireAuth.signOut();
     if (this.platform.is('cordova')) {
-      this.gplus.logout();
+      this.gplus.logout().catch(k=>{
+        console.log(k);
+      });
     }
   }
 
