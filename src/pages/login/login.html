@@ -17,25 +17,30 @@
   <ion-grid>
 
     <ion-row align-items-center>
-      <ion-col>
-        <img src="assets/imgs/login.png" />
-      </ion-col>
+      <div class="center">
+        <ion-col>
+          <img src="assets/imgs/login.png" />
+        </ion-col>
+      </div>
     </ion-row>
 
     <ion-row align-items-center>
-      <ion-col>
-      </ion-col>
-
-      <ion-col>
+      <div class="center">
         <button ion-button icon-left round outline (click)="login()">
           <ion-icon name="logo-googleplus"></ion-icon>
           Login
         </button>
-      </ion-col>
-
-      <ion-col>
-      </ion-col>
+      </div>
     </ion-row>
+
+    <ion-row align-items-center>
+        <div class="center">
+          <button ion-button icon-left round outline (click)="instructorLogin()">
+            <ion-icon name="school"></ion-icon>
+            Instructor Login
+          </button>
+        </div>
+      </ion-row>
 
   </ion-grid>
 
