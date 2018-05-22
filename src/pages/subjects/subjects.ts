@@ -80,7 +80,7 @@ export class SubjectsPage {
       topics: {
         sub: this.subjects,
         top: topic,
-        path: this.path + "/" + topic
+        path: "/Subjects /"+this.path + "/" + topic
       }
 
     })
