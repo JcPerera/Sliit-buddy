@@ -40,42 +40,43 @@ export class VideosPage {
   }
 
   likeButton = item => {
-    this.setState(item);
-    if (this.state) {
-      this.displayAlert('Warning', 'You Have Already Liked this Video')
-    } else {
-      this.addToList(item);
-    }
+    this.getLikeData(item);
   }
 
   addToList = item => {
     this.path = this.navParams.get('video').path + "/" + item.index + "/likes/"
     var upload = this.database.ref(this.path).push();
-    upload.set({uid:this.currentUser.uid});
+    upload.set({ uid: this.currentUser.uid });
     console.log(this.path)
-    console.log(item.data)
-    this.likes = item.data.likes;
-    this.likes.push({uid:this.currentUser.uid})
+
   }
 
-  setState = item => {
-    item.data.likes.map((likes, index) => {
-      if (likes.uid == this.currentUser.uid) {
-        this.state = true;
-        return true;
-      } else {
-        this.state = false;
+  setState = (item) => {
+    if(item){
+      Object.values(item).map((k)=>{
+        if(k.uid == this.currentUser.uid){
+          this.state = true;
+          return;
+        }else{
+          this.state = false;
+        }
+      })
+    }else{
+      this.state = false
+    }
+    
+    console.log(this.state);
+  }
+
+  getLikeData = item => {
+    let url = this.navParams.get('video').path + "/" + item.index + "/likes/"
+    this.database.ref(url).once('value', snap => {
+      this.setState(snap.val())
+      if(this.state == true){
+        console.log('already liked')
+      }else{
+        this.addToList(item);
       }
-    })
-  }
-
-  displayAlert(title: any, msg: any) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: msg,
-      buttons: ['OK']
     });
-    alert.present();
   }
-
 }
