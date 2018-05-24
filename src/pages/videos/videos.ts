@@ -21,62 +21,79 @@ import * as firebase from 'firebase';
 export class VideosPage {
 
   public videos = [];
-  public likes;
   public currentUser: any;
-  public state: any;
-  public path: any;
   public database: any;
+  public data: any;
+  public myLike: any;
+  public key: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController
   ) {
-    this.currentUser = firebase.auth().currentUser;
-    this.database = firebase.database();
-    this.navParams.get('video').data.map((data, index) => {
-      this.videos.push({ data, index })
+    this.currentUser = firebase.auth().currentUser.uid;
+    this.database = firebase.database().ref(this.navParams.get('video').path);
+    this.database.on('value', snap => {
+      this.data = snap.val();
+      let data = snap.val();
+      if (data) {
+        this.videos = [];
+        Object.keys(data).map(k => {
+          let likes = null
+          let comments = null
+          try {
+            likes = Object.keys(data[k].likes).length
+          } catch{
+            likes = 0
+          }
+          try {
+            comments = Object.keys(data[k].comments).length
+          } catch{
+            comments = 0
+          }
+
+          this.videos.push({
+            key: k,
+            name: data[k].name,
+            video: data[k].video,
+            like: likes,
+            comments: comments
+          })
+        })
+      } else {
+        this.navCtrl.pop();
+      }
     })
+    console.log(this.videos);
   }
 
   likeButton = item => {
-    this.getLikeData(item);
+    this.checkLikeStatus(item);
+    if (this.myLike == true) {
+      this.database.child(item + "/likes/" + this.key).remove();
+    } else {
+      this.database.child(item + "/likes").push({
+        uid: this.currentUser
+      })
+    }
+
   }
 
-  addToList = item => {
-    this.path = this.navParams.get('video').path + "/" + item.index + "/likes/"
-    var upload = this.database.ref(this.path).push();
-    upload.set({ uid: this.currentUser.uid });
-    console.log(this.path)
-
-  }
-
-  setState = (item) => {
-    if(item){
-      Object.values(item).map((k)=>{
-        if(k.uid == this.currentUser.uid){
-          this.state = true;
-          return;
-        }else{
-          this.state = false;
+  checkLikeStatus = (item) => {
+    this.myLike = false;
+    let likes = this.data[item].likes
+    try {
+      Object.keys(likes).map((k) => {
+        if (likes[k].uid == this.currentUser) {
+          this.key = k;
+          this.myLike = true
+        } else {
+          console.log('else')
         }
       })
-    }else{
-      this.state = false
+    } catch{
+      console.log('catch')
     }
-    
-    console.log(this.state);
-  }
-
-  getLikeData = item => {
-    let url = this.navParams.get('video').path + "/" + item.index + "/likes/"
-    this.database.ref(url).once('value', snap => {
-      this.setState(snap.val())
-      if(this.state == true){
-        console.log('already liked')
-      }else{
-        this.addToList(item);
-      }
-    });
   }
 }

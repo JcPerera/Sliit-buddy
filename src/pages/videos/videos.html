@@ -19,23 +19,20 @@
     <iframe width="100%" height="100%" [src]="item.video | youtube" frameborder="10" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
     <ion-card-content>
-      <p>{{item.data.name}}</p>
-      <p>
-        Hi
-      </p>
+      <h3>{{item.name}}</h3>
     </ion-card-content>
 
     <ion-row>
-      <ion-col>
-        <button ion-button icon-left clear small (click)="likeButton(item)">
+      <ion-col >
+        <button ion-button icon-left clear small (click)="likeButton(item.key)">
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>{{item.data.likes.length}} Likes</div>
+          <div>{{item.like}} Likes</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>{{item.data.comments.length}} Comments</div>
+          <div> {{item.comments}} Comments</div>
         </button>
       </ion-col>
       
