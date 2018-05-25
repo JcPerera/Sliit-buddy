@@ -30,7 +30,7 @@
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small>
+        <button ion-button icon-left clear small (click)="goToComments(item.key)">
           <ion-icon name="text"></ion-icon>
           <div> {{item.comments}} Comments</div>
         </button>

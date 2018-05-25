@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
+import { CommentsPage } from "../comments/comments";
 
 import * as firebase from 'firebase';
 
@@ -77,7 +78,6 @@ export class VideosPage {
         uid: this.currentUser
       })
     }
-
   }
 
   checkLikeStatus = (item) => {
@@ -96,4 +96,12 @@ export class VideosPage {
       console.log('catch')
     }
   }
+
+  goToComments = (item) =>{
+    this.navCtrl.push(CommentsPage, {
+      path: this.navParams.get('video').path+"/"+item
+    })
+  }
+
+
 }

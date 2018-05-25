@@ -1,0 +1,44 @@
+<!--
+  Generated template for the CommentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>comments</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let item of comments">
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="item.photo">
+      </ion-avatar>
+      <h2>{{item.name}}</h2>
+    </ion-item>
+    <ion-card-content>
+      <p>{{item.comment}}</p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+<ion-footer class="chatPageFooter">
+  <ion-toolbar>
+
+    <ion-item>
+          <ion-input [(ngModel)]="comm" type="text" placeholder="Your comment......"></ion-input>>
+    </ion-item>
+
+    <ion-buttons right>
+      <button color="primary" style="min-width:50px;" ion-button (click)="sendComment()">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
