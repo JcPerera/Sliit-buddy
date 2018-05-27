@@ -75,6 +75,7 @@ export class LoginPage {
 
 
     } catch (err) {
+      this.hidePreloader();
       console.log(err);
     }
   }
@@ -97,6 +98,8 @@ export class LoginPage {
         console.log(error);
       })
     } catch (err) {
+      this.hidePreloader();
+
       console.log(err);
     }
   }
@@ -137,14 +140,14 @@ export class LoginPage {
               }
             } else {
               this.fireAuth.signOut();
-              this.gplus.logout().catch(k=>{
+              this.gplus.logout().catch(k => {
                 console.log(k);
               });;
               this.displayAlert('Warning', 'You are not an instructor please login as a student')
             }
           } catch{
             this.fireAuth.signOut();
-            this.gplus.logout().catch(k=>{
+            this.gplus.logout().catch(k => {
               console.log(k);
             });;
             this.displayAlert('Warning', 'You are not an instructor please login as a student')
@@ -157,6 +160,7 @@ export class LoginPage {
 
 
     } catch (err) {
+      this.hidePreloader();
       console.log(err);
     }
   }
@@ -180,13 +184,13 @@ export class LoginPage {
                 console.log(error);
               }
             } else {
-              this.fireAuth.signOut().catch(k=>{
+              this.fireAuth.signOut().catch(k => {
                 console.log(k);
               });;
               this.displayAlert('Warning', 'You are not an instructor please login as a student')
             }
           } catch{
-            this.fireAuth.signOut().catch(k=>{
+            this.fireAuth.signOut().catch(k => {
               console.log(k);
             });;
             this.displayAlert('Warning', 'You are not an instructor please login as a student')
@@ -195,6 +199,7 @@ export class LoginPage {
         })
       })
     } catch (err) {
+      this.hidePreloader();
       console.log(err);
     }
   }

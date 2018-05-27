@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, AlertController } from 'ionic-angular';
 import { GooglePlus } from "@ionic-native/google-plus";
 import { ActionSheetController } from 'ionic-angular';
 import * as firebase from 'firebase';
@@ -17,7 +17,8 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public gplus: GooglePlus,
     public platform: Platform,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController
   ) {
 
     this.fireAuth = firebase.auth();
@@ -68,6 +69,28 @@ export class HomePage {
       ]
     });
     actionSheet.present();
+  }
+
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Warning !',
+      message: 'Do You Really Want To Sign Out ?',
+      buttons: [
+        {
+          text: 'Disagree',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Agree',
+          handler: () => {
+            this.signOut();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
 }

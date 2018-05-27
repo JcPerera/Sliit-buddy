@@ -4,7 +4,7 @@
       Home
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only color="royal" (click)="signOut()">
+      <button ion-button icon-only color="royal" (click)="showConfirm()">
         <ion-icon name="md-log-out"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content class="back" padding>
-    <ion-list class="trans" no-lines>
+    <ion-list class="trans" >
         <button ion-item *ngFor="let item of items" (click)="presentActionSheet(item)">
           {{ item }}
         </button> 

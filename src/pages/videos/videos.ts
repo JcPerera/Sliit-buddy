@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-
 import { CommentsPage } from "../comments/comments";
 
 import * as firebase from 'firebase';
