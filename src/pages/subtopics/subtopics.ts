@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { VideosPage } from "../videos/videos";
 import { AdminPage } from "../admin/admin";
+import { AddSubtopicPage } from "../add-subtopic/add-subtopic";
 import * as firebase from 'firebase';
 
 
@@ -31,6 +32,7 @@ export class SubtopicsPage {
   ) {
     this.userId = firebase.auth().currentUser.uid;
     this.userDb = firebase.database().ref('users')
+    this.getUserInfo();
     this.data = this.navParams.get("subtopics")
     //Since this is an array (not an object)
     //this.subtopics=[...this.data.info[this.data.topic].subtopics]
@@ -38,25 +40,39 @@ export class SubtopicsPage {
     Object.keys(this.data.info[this.data.topic].subtopics).map((k) => {
       this.subtopics.push(k);
     })
-    this.getUserInfo();
   }
 
   getUserInfo = () => {
-    this.userDb.child(this.userId).once('value', snap => {
-      this.type = snap.val().loggedAs;
+    this.type = this.userDb.child(this.userId).once('value').then(k => {
+      this.type = k.val().loggedAs;
     })
   }
 
-  goTOPage(item) {
-    if (this.type == "student"){
-      this.goToVideosPage(item);
-    }else if(this.type == "instructor"){
-      this.goToAdminPage(item)
-    }else{
-      this.goToVideosPage(item);
-     
+  goToAddSubTopic = () => {
+    this.navCtrl.push(AddSubtopicPage, {
+      path: this.data.path
+    })
+  }
+
+  checkUser = () => {
+    if (this.type == "instructor") {
+      return true;
+    } else {
+      return false;
     }
   }
+
+  goTOPage(item) {
+    if (this.type == "student") {
+      this.goToVideosPage(item);
+    } else if (this.type == "instructor") {
+      this.goToAdminPage(item)
+    } else {
+      this.goToVideosPage(item);
+
+    }
+  }
+
   goToVideosPage(item) {
     this.navCtrl.push(VideosPage, {
       video: {

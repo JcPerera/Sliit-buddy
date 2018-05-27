@@ -5,13 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Subtopics</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
+    <ion-navbar color="primary">
+      <ion-title>Sub Topics</ion-title>
+      <ion-buttons end *ngIf="checkUser()">
+        <button ion-button icon-only color="royal" (click)="goToAddSubTopic()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>>
 
 <ion-content padding>
   <ion-list no-lines>

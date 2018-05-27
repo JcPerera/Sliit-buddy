@@ -23,24 +23,28 @@ export class AdminPage {
   public videos = []
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams) {
-    this.database = firebase.database().ref(this.navParams.get('video').path);
-    this.database.on('value', snap => {
-      console.log(snap.val())
-      let data = snap.val();
-      if (data) {
-        this.videos = [];
-        Object.keys(data).map(k => {
-          this.videos.push({
-            key: k,
-            name: data[k].name,
-            video: data[k].video
+    try {
+      this.database = firebase.database().ref(this.navParams.get('video').path);
+      this.database.on('value', snap => {
+        console.log(snap.val())
+        let data = snap.val();
+        if (data) {
+          this.videos = [];
+          Object.keys(data).map(k => {
+            this.videos.push({
+              key: k,
+              name: data[k].name,
+              video: data[k].video
+            })
           })
-        })
-      } else {
-        this.navCtrl.pop();
-      }
-    })
-    console.log(this.videos);
+        } else {
+          this.videos = [];
+        }
+      })
+      console.log(this.videos);
+    } catch{
+      this.videos = [];
+    }
   }
 
   presentModal() {

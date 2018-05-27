@@ -5,25 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Videos</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
   <ion-card *ngFor="let item of videos">
     <iframe width="100%" height="100%" [src]="item.video | youtube" frameborder="10" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
     <ion-card-content>
       <h3>{{item.name}}</h3>
     </ion-card-content>
-
     <ion-row>
-      <ion-col >
+      <ion-col>
         <button ion-button icon-left clear small (click)="likeButton(item.key)">
           <ion-icon name="thumbs-up"></ion-icon>
           <div>{{item.like}} Likes</div>
@@ -35,9 +29,6 @@
           <div> {{item.comments}} Comments</div>
         </button>
       </ion-col>
-      
     </ion-row>
-
   </ion-card>
-
 </ion-content>

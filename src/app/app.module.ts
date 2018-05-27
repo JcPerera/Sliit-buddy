@@ -14,6 +14,10 @@ import { VideosPage } from "../pages/videos/videos";
 import { AdminPage } from "../pages/admin/admin";
 import { ModalPage } from "../pages/modal/modal";
 import { CommentsPage } from "../pages/comments/comments";
+import { AddSubjectPage } from "../pages/add-subject/add-subject";
+import { AddSubtopicPage } from "../pages/add-subtopic/add-subtopic";
+import { AddTopicPage } from "../pages/add-topic/add-topic";
+
 
 import { YoutubePipe } from "../pipes/youtube/youtube";
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -30,7 +34,10 @@ import { GooglePlus } from '@ionic-native/google-plus';
     YoutubePipe,
     AdminPage,
     ModalPage,
-    CommentsPage
+    CommentsPage,
+    AddSubjectPage,
+    AddSubtopicPage,
+    AddTopicPage
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,10 @@ import { GooglePlus } from '@ionic-native/google-plus';
     VideosPage,
     AdminPage,
     ModalPage,
-    CommentsPage
+    CommentsPage,
+    AddSubjectPage,
+    AddSubtopicPage,
+    AddTopicPage
   ],
   providers: [
     StatusBar,

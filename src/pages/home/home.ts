@@ -5,7 +5,6 @@ import { ActionSheetController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 import { SubjectsPage } from "../subjects/subjects";
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -20,13 +19,14 @@ export class HomePage {
     public platform: Platform,
     public actionSheetCtrl: ActionSheetController
   ) {
+
     this.fireAuth = firebase.auth();
   }
 
   signOut() {
     this.fireAuth.signOut();
     if (this.platform.is('cordova')) {
-      this.gplus.logout().catch(k=>{
+      this.gplus.logout().catch(k => {
         console.log(k);
       });
     }

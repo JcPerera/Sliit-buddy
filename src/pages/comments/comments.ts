@@ -19,7 +19,6 @@ import * as firebase from 'firebase';
 export class CommentsPage {
 
   public database: any;
-  public msg: any;
   public comments = [];
   public currentUser: any;
   public comm: any;
@@ -29,34 +28,43 @@ export class CommentsPage {
     console.log(this.navParams.get('path'))
     this.database = firebase.database().ref(this.navParams.get('path') + "/comments")
     this.getData();
-    this.msg = {
-      content: 'Am I dreaming?',
-      position: 'left',
-      time: '12/3/2016',
-      senderName: 'Gregory'
+  }
+
+  anyComments = () => {
+    if (this.comments.length == 0) {
+      return true
+    } else {
+      return false;
     }
   }
 
-
   getData = () => {
-    try{
+    try {
       this.database.on('value', snapshot => {
         this.comments = [];
         let data = snapshot.val();
-        Object.keys(data).map(k => {
-          this.comments.push({
-            key: k,
-            uid: data[k].uid,
-            comment: data[k].comment,
-            name: data[k].name,
-            photo: data[k].photo
+
+        try {
+          Object.keys(data).map(k => {
+            this.comments.push({
+              key: k,
+              uid: data[k].uid,
+              comment: data[k].comment,
+              name: data[k].name,
+              photo: data[k].photo
+            })
+          }, error => {
+            this.comments = []
           })
-        })
+        } catch{
+          this.comments = []
+        }
+
       })
-    }catch{
+    } catch{
       this.comments = [];
     }
-    
+
   }
 
   sendComment = () => {
@@ -69,8 +77,20 @@ export class CommentsPage {
         name: this.currentUser.displayName,
         photo: this.currentUser.photoURL
       })
+      this.comm ="";
     }
   }
 
+  sameUser = (item) => {
+    if (item == this.currentUser.uid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  deleteComment = (item) => {
+    this.database.child(item).remove();
+  }
 
 }
