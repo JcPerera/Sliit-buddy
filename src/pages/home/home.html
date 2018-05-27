@@ -11,8 +11,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-list no-lines>
+<ion-content class="back" padding>
+    <ion-list class="trans" no-lines>
         <button ion-item *ngFor="let item of items" (click)="presentActionSheet(item)">
           {{ item }}
         </button> 

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from "firebase";
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ModalController } from 'ionic-angular';
 
 import { TopicPage } from "../topic/topic";
+import { AddSubjectPage } from "../add-subject/add-subject";
 
 /**
  * Generated class for the SubjectsPage page.
@@ -24,27 +25,45 @@ export class SubjectsPage {
   public subArr = [];
   public path: any;
   public loading: any;
+  public userId: any;
+  public userDb: any;
+  public type: any;
 
 
   constructor(public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    public modalCtrl: ModalController
   ) {
     this.displayPreloader('Loading Data');
-    firebase.database().ref('Subjects ').once('value').then((snapshot) => {
+    this.userId = firebase.auth().currentUser.uid;
+    this.userDb = firebase.database().ref('users')
+    this.getUserInfo();
+    firebase.database().ref('Subjects').once('value').then((snapshot) => {
       this.data = (snapshot.val());
       this.getTheCorrectSubjects();
       Object.keys(this.subjects).map((k) => {
         this.subArr.push(k);
       })
+      this.hidePreloader();
     }).catch(k => {
       console.log(k);
     });;
 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SubjectsPage');
+  getUserInfo = () => {
+    this.type = this.userDb.child(this.userId).once('value').then(k => {
+      this.type = k.val().loggedAs;
+    })
+  }
+
+  checkUser = () => {
+    if (this.type == "instructor") {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getTheCorrectSubjects() {
@@ -80,7 +99,7 @@ export class SubjectsPage {
       topics: {
         sub: this.subjects,
         top: topic,
-        path: this.path + "/" + topic
+        path: "/Subjects/" + this.path + "/" + topic
       }
 
     })
@@ -88,16 +107,19 @@ export class SubjectsPage {
 
   displayPreloader(msg: any): void {
     this.loading = this.loadingCtrl.create({
-      dismissOnPageChange: true,
       content: msg
     });
 
     this.loading.present();
   }
 
-
-
   hidePreloader(): void {
     this.loading.dismiss();
+  }
+
+  goToAddSubject() {
+    this.navCtrl.push(AddSubjectPage, {
+      path: "/Subjects/" + this.path
+    })
   }
 }
