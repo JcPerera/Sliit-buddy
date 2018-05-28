@@ -36,12 +36,16 @@ export class SubjectsPage {
     public modalCtrl: ModalController
   ) {
     this.displayPreloader('Loading Data');
+  }
+
+  ionViewCanEnter() {
     this.userId = firebase.auth().currentUser.uid;
     this.userDb = firebase.database().ref('users')
     this.getUserInfo();
     firebase.database().ref('Subjects').once('value').then((snapshot) => {
       this.data = (snapshot.val());
       this.getTheCorrectSubjects();
+      this.subArr = []
       Object.keys(this.subjects).map((k) => {
         this.subArr.push(k);
       })
@@ -49,7 +53,6 @@ export class SubjectsPage {
     }).catch(k => {
       console.log(k);
     });;
-
   }
 
   getUserInfo = () => {
