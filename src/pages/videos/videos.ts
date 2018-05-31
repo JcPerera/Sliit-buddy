@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
-
 import { CommentsPage } from "../comments/comments";
 
 import * as firebase from 'firebase';
@@ -96,6 +95,52 @@ export class VideosPage {
       console.log('catch')
     }
   }
+
+  getItems(ev: any) {
+    // Reset items back to all of the items
+    this.database.on('value', snap => {
+      this.data = snap.val();
+      let data = snap.val();
+      if (data) {
+        this.videos = [];
+        Object.keys(data).map(k => {
+          let likes = null
+          let comments = null
+          try {
+            likes = Object.keys(data[k].likes).length
+          } catch{
+            likes = 0
+          }
+          try {
+            comments = Object.keys(data[k].comments).length
+          } catch{
+            comments = 0
+          }
+
+          this.videos.push({
+            key: k,
+            name: data[k].name,
+            video: data[k].video,
+            like: likes,
+            comments: comments
+          })
+        })
+      } else {
+        this.navCtrl.pop();
+      }
+    })
+
+    // set val to the value of the searchbar
+    let val = ev.target.value;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.videos = this.videos.filter((item) => {
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }
+  }
+
 
   goToComments = (item) =>{
     this.navCtrl.push(CommentsPage, {

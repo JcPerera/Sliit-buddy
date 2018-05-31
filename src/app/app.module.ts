@@ -6,64 +6,57 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from "../pages/login/login";
-import { SubjectsPage } from "../pages/subjects/subjects";
-import { TopicPage } from "../pages/topic/topic";
-import { SubtopicsPage } from "../pages/subtopics/subtopics";
-import { VideosPage } from "../pages/videos/videos";
-import { AdminPage } from "../pages/admin/admin";
-import { ModalPage } from "../pages/modal/modal";
-import { CommentsPage } from "../pages/comments/comments";
-import { AddSubjectPage } from "../pages/add-subject/add-subject";
-import { AddSubtopicPage } from "../pages/add-subtopic/add-subtopic";
-import { AddTopicPage } from "../pages/add-topic/add-topic";
 
+import { SubjectsPageModule } from "../pages/subjects/subjects.module";
+import { TopicPageModule } from "../pages/topic/topic.module";
+import { SubtopicsPageModule } from "../pages/subtopics/subtopics.module";
+import { VideosPageModule } from "../pages/videos/videos.module";
+import { AdminPageModule } from "../pages/admin/admin.module";
+import { ModalPageModule } from "../pages/modal/modal.module";
+import { CommentsPageModule } from "../pages/comments/comments.module";
+import { LoginPageModule } from "../pages/login/login.module";
+import { AddSubjectPageModule } from "../pages/add-subject/add-subject.module";
+import { AddSubtopicPageModule } from "../pages/add-subtopic/add-subtopic.module";
+import { AddTopicPageModule } from "../pages/add-topic/add-topic.module";
 
-import { YoutubePipe } from "../pipes/youtube/youtube";
+import { PipesModule } from "../pipes/pipes.module";
+
 import { GooglePlus } from '@ionic-native/google-plus';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    LoginPage,
-    SubjectsPage,
-    TopicPage,
-    SubtopicsPage,
-    VideosPage,
-    YoutubePipe,
-    AdminPage,
-    ModalPage,
-    CommentsPage,
-    AddSubjectPage,
-    AddSubtopicPage,
-    AddTopicPage
+    HomePage
+
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AddSubjectPageModule,
+    AddSubtopicPageModule,
+    AddTopicPageModule,
+    AdminPageModule,
+    CommentsPageModule,
+    ModalPageModule,
+    LoginPageModule,
+    VideosPageModule,
+    SubtopicsPageModule,
+    TopicPageModule,
+    SubjectsPageModule,
+    PipesModule
+    
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    LoginPage,
-    SubjectsPage,
-    TopicPage,
-    SubtopicsPage,
-    VideosPage,
-    AdminPage,
-    ModalPage,
-    CommentsPage,
-    AddSubjectPage,
-    AddSubtopicPage,
-    AddTopicPage
+    HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     GooglePlus,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }
